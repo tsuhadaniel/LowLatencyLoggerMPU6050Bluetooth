@@ -21,7 +21,8 @@ void userSetup() {
 #elif I2CDEV_IMPLEMENTATION == I2CDEV_BUILTIN_FASTWIRE
   Fastwire::setup(400, true);
 #endif
-  mpu.initialize();  
+  mpu.initialize();
+  mpu.setFullScaleAccelRange(1);
 }
 
 // Print a data record.
@@ -42,6 +43,20 @@ void printData(Print* pr, data_t* data) {
   pr->print(data->gy);
   pr->write(',');
   pr->println(data->gz);
+}
+
+// Plot a data record.
+void plotData(Print* pr, data_t* data) {
+  if (startMicros == 0) {
+    startMicros = data->time;
+  }
+  pr->print(data->time- startMicros);
+  pr->write(' ');
+  pr->print(data->ax);
+  pr->write(' ');
+  pr->print(data->ay);
+  pr->write(' ');
+  pr->println(data->az);
 }
 
 // Print data header.

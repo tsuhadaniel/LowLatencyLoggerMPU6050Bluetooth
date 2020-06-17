@@ -13,6 +13,7 @@ struct data_t {
 };
 void acquireData(data_t* data);
 void printData(Print* pr, data_t* data);
+void plotData(Print* pr, data_t* data);
 void printHeader(Print* pr);
 void userSetup();
 #endif  // UserTypes_h

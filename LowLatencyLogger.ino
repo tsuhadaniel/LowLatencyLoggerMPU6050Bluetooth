@@ -556,6 +556,25 @@ void testSensor() {
   }
 }
 //------------------------------------------------------------------------------
+void plotSensor() {
+  const uint32_t interval = 200000;
+  int32_t diff;
+  data_t data;
+  bluetooth.println(F("\nTesting - type any character to stop\n"));
+  // Wait for bluetooth Idle.
+  delay(1000);
+  printHeader(&bluetooth);
+  uint32_t m = micros();
+  while (!bluetooth.available()) {
+    m += interval;
+    do {
+      diff = m - micros();
+    } while (diff > 0);
+    acquireData(&data);
+    plotData(&bluetooth, &data);
+  }
+}
+//------------------------------------------------------------------------------
 void setup(void) {
   if (ERROR_LED_PIN >= 0) {
     pinMode(ERROR_LED_PIN, OUTPUT);
@@ -614,6 +633,7 @@ void loop(void) {
   bluetooth.println(F("l - list files"));
   bluetooth.println(F("r - record data"));
   bluetooth.println(F("t - test without logging"));
+  bluetooth.println(F("p - plot without logging"));
   while(!bluetooth.available()) {
     SysCall::yield();
   }
@@ -647,6 +667,8 @@ void loop(void) {
     logData();
   } else if (c == 't') {
     testSensor();
+  } else if (c == 'p') {
+    plotSensor();
   } else {
     bluetooth.println(F("Invalid entry"));
   }
