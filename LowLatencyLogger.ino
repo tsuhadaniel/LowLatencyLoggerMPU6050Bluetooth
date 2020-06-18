@@ -563,7 +563,6 @@ void plotSensor() {
   bluetooth.println(F("\nTesting - type any character to stop\n"));
   // Wait for bluetooth Idle.
   delay(1000);
-  printHeader(&bluetooth);
   uint32_t m = micros();
   while (!bluetooth.available()) {
     m += interval;

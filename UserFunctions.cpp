@@ -50,8 +50,6 @@ void plotData(Print* pr, data_t* data) {
   if (startMicros == 0) {
     startMicros = data->time;
   }
-  pr->print(data->time- startMicros);
-  pr->write(' ');
   pr->print(data->ax);
   pr->write(' ');
   pr->print(data->ay);
